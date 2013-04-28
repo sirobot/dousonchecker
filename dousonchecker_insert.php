@@ -1,8 +1,10 @@
 <?php
 // 同村チェッカー共通部分の抽出
-
 require_once('simplehtmldom/simple_html_dom.php');
-require_once('dousonchecker_config.php');
+
+$path = "/home/vage/siro_common/php";
+set_include_path(get_include_path() . PATH_SEPARATOR . $path);
+require_once ('db_common.php');
 
 // エピローグURLから挿入
 function insert_vil_data($vil_url,$form_server){
@@ -178,16 +180,6 @@ function insert_vil_all($form_url,$form_server,$form_first_vil,$form_last_vil){
 
 function enc_convert($str){
 	return mb_convert_encoding($str,'utf8','sjis-win');
-}
-
-function db_conn(){
-	var_dump($insert_one_password);
-	$conn = mysql_connect(MYSQL_SERVER,MYSQL_USER,MYSQL_PASS);
-	if($conn !== false){
-		mysql_select_db(MYSQL_USER,$conn);
-		mysql_query("SET NAMES UTF8");
-	}
-	return $conn;
 }
 
 // 余計な末尾スペースの削除

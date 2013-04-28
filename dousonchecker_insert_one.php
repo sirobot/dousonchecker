@@ -5,6 +5,7 @@
 
 require_once('simplehtmldom/simple_html_dom.php');
 require_once('dousonchecker_insert.php');	// 共通処理
+require_once('dousonchecker_config.php');	// パスワード読み込み
 
 // formからのデータを読み込み
 $form_url = $_POST['vilurl'];
