@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="ja" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>村DB用参加者データコンバータ</title>
+</head>
+
+<body>
+手動挿入となります。
+管理者パスワードと、村のエピローグの「キャスト・ID一覧」が表示されているページのURLを入力してください。<br>
+<br>
+<br>
+<form action="dousonchecker_insert_one.php" method="post" name="form1">
+	村エピURL：<br />
+	<input name="vilurl" style="width: 1000px" type="text" /><br />
+	鯖名(URL解析が面倒なので手入力)：
+	<select name="serverid">
+	<option value="Wolf">標準</option>
+	<option value="Cafe">陰謀(陰謀の苑・Cabala Cafe)</option>
+	<option value="AS">大乱闘AS</option>
+	<option value="RPBPr">RPBPr</option>
+	<option value="RPBc">RPBc</option>
+	<option value="RPBx">RPBx</option>
+	<option value="Pan">似顔絵人狼</option>
+	<option value="RP">RP</option>
+	<option value="RPAd">RPAd</option>
+	<option value="ultimate">大乱闘</option>
+	</select>
+	<input name="adminpassword" type="password" />
+	<input name="insertdata" type="submit" value="submit" /></form>
+</body>
+
+</html>

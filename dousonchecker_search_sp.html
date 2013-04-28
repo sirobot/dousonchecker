@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+
+<title>同村チェッカー(議事)</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
+<meta name="format-detection" content="telephone=no" />
+
+<link rel="stylesheet" href="./css/default.css" />
+<link rel="stylesheet" href="./css/style.css" />
+<link rel="stylesheet" href="./css/jquery.mobile-1.0.1.min.css" />
+
+<script src="./js/jquery-1.7.1.min.js"></script>
+<script src="./js/jquery-custom-setting.js"></script>
+<script src="./js/jquery.mobile-1.0.1.min.js"></script>
+<script src="./js/share.js"></script>
+<script type="text/javascript">
+<!--
+var a8mat='1ZKF1U+5YC43M+348+BDLDD';
+//-->
+</script>
+<script type="text/javascript" src="http://rot5.a8.net/sbr/sb.js"></script>
+
+</head>
+<body>
+<div data-role="page">
+	<div data-role="header">
+		<h1>同村チェッカー(議事)</h1>
+	</div>
+	<div data-role="content">
+		<form action="dousonchecker_search.php" method="GET" name="form1" data-ajax=“false”>
+			<label for="myID">自分のID:</label>
+			<input type="text" name="myID_0" id="myID" value="" />
+			<label for="neighborID">相手のID:</label>
+			<input type="text" name="neighborID_0" id="neighborID" value="" />
+			<br>
+			<input name="searchdata" type="submit" value="check" data-ajax=“false” />
+			<br>
+			<div data-role="collapsible"> 
+				<h3>検索オプション</h3>
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup">
+					<legend>自キャラ名の表示:</legend>
+					<input type="checkbox" name="myIDShow" id="show" value="show"/>
+					<label for="show">表示する</label>
+					</fieldset>
+				</div>
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup">
+					<legend>完全一致検索(相手のID):</legend>
+					<input type="checkbox" name="searchLike" id="like" value="like" checked="checked"/>
+					<label for="like">使用する</label>
+					</fieldset>
+				</div>
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup">
+					<legend>検索結果に自分のIDを含む<br>:</legend>
+					<input type="checkbox" name="searchWithMyID" id="withMyID" value="withMyID"/>
+					<label for="withMyID">自IDを含む</label>
+					</fieldset>
+				</div>
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup">
+					<legend>ダミーを検索結果から除外する:</legend>
+					<input type="checkbox" name="searchWithoutMaster" id="withoutMaster" value="withoutMaster"/>
+					<label for="withoutMaster">除外する</label>
+					</fieldset>
+				</div>
+				<div data-role="fieldcontain">
+				    <fieldset data-role="controlgroup">
+				        <legend>対象サーバー選択:</legend>
+				        <input type="checkbox" name="server[]" checked="checked" id="Wolf" value="Wolf" />
+				        <label for="Wolf">標準</label>
+				        <input type="checkbox" name="server[]" checked="checked" id="Cafe" value="Cafe" />
+				        <label for="Cafe">陰謀の苑(CabalaCafe)</label>
+				        <input type="checkbox" name="server[]" checked="checked" id="AS" value="AS" />
+				        <label for="AS">大乱闘AS</label>
+				        <input type="checkbox" name="server[]" checked="checked" id="RPBPr" value="RPBPr" />
+				        <label for="RPBPr">RPBraid Perjury rulez</label>
+				        <input type="checkbox" name="server[]" checked="checked" id="RPBx" value="RPBx" />
+				        <label for="RPBx">RPBraid xebec</label>
+				        <input type="checkbox" name="server[]" checked="checked" id="RPBc" value="RPBc" />
+				        <label for="RPBc">RPBraid crazy</label>
+				        <input type="checkbox" name="server[]" checked="checked" id="Pan" value="Pan" />
+				        <label for="Pan">似顔絵人狼</label>
+				        <input type="checkbox" name="server[]" checked="checked" id="ultimate" value="ultimate" />
+				        <label for="ultimate">大乱闘</label>
+				        <input type="checkbox" name="server[]" checked="checked" id="RPAd" value="RPAd" />
+				        <label for="RPAd">RPAdvance</label>
+				        <input type="checkbox" name="server[]" checked="checked" id="RP" value="RP" />
+				        <label for="RP">RP</label>
+				    </fieldset>
+				</div>
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup">
+					<legend>キャラクター名検索:</legend>
+					<input type="checkbox" name="searchCharacter" id="searchChara" value="searchChara"/>
+					<label for="searchChara">有効にする</label>
+					<label for="searchCharacterName">検索キャラ名(部分一致):</label>
+					<input type="text" name="searchCharacterName" id="searchCharacterName" value="" />
+					<br>
+					</fieldset>
+				</div>
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup">
+					<legend>村名検索：</legend>
+					<input type="checkbox" name="searchVillage" id="searchVillage" value="searchVil"/>
+					<label for="searchVillage">有効にする</label>
+					<label for="searchVillageName">村名検索(部分一致)：</label>
+					<input type="text" name="searchVillageName" id="searchVillageName" value="" />
+					<br>
+					</fieldset>
+				</div>		
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup">
+					<legend>村日付検索：</legend>
+					<input type="checkbox" name="searchVilDays" id="searchVilDays" value="searchVilDays"/>
+					<label for="searchVilDays">有効にする</label>
+					<label for="searchVillageName">村日付検索(yyyy/mm/dd形式)：</label>
+					<input type="text" id="from" name="searchVilDaysFrom"/>～<input type="text" id="to" name="searchVilDaysTo"/>
+					<br>
+					</fieldset>
+				</div>
+				<input name="searchdata" type="submit" value="check" data-ajax=“false”/>
+				<input type="hidden" name="searchMode" value="sp">
+			</div>
+		</form>
+	</div>
+	<br>
+	<br>
+	<div data-role="footer">
+		<h2><a href="dousonchecker_search.html" data-ajax="false" >PC版を表示</a></h2>
+		<h4>※同村チェッカー(議事)スマホ版はβ版です。</h4>
+	</div>
+</div>
+</body>
+</html>

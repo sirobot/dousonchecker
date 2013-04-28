@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="ja" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta name="viewport" content="width=device-width" />
+<title>同村チェッカー（議事）</title>
+<link href="../style.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.style1 {
+	font-size: xx-large;
+}
+.style3 {
+	border: 1px solid #333333;
+}
+* html body dl.list dd div{
+   display:inline-block;
+   
+}
+
+dl.list {
+	border-bottom: silver thin solid;
+	border-right: silver thin solid;
+}
+
+dl.list dt {
+   float:left;
+   color:#333;
+}
+
+dl.list dt span.required{
+   padding-left:5px;
+   border-left:5px solid #FF7777;
+}
+
+dl.list dt span.normal{
+   padding-left:5px;
+   border-left:5px solid #999;
+}
+
+dl.list dd {
+   margin:0;
+   margin-left:200px;
+}
+label {
+  white-space: nowrap;
+ }
+.auto-style1 {
+	margin-left: 40px;
+}
+</style>
+<script src="js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui-1.8.21.custom/development-bundle/ui/minified/jquery.ui.core.min.js" type="text/javascript"></script>
+<script src="js/jquery-ui-1.8.21.custom/development-bundle/ui/minified/jquery.ui.datepicker.min.js" type="text/javascript"></script>
+<script src="js/jquery.addInputArea/jquery.addInputArea.4.4.js" type="text/javascript"></script>
+<link href="js/jquery-ui-1.8.21.custom/development-bundle/themes/overcast/jquery.ui.all.css" rel="stylesheet" />
+<script type="text/javascript">
+jQuery(function($){
+	$('#myID').addInputArea({
+    maximum : 5
+    });
+});
+</script>
+</head>
+
+<body>
+
+<h1>エピローグ検索(β)</h1>
+<hr />
+<h3>検索</h3>
+<p>項目名の前が赤い入力欄は必須入力です。</p>
+<form action="dousonchecker_epi.php" method="get" name="form1">
+		<dl id="myID" class="list">
+			<dt><span class="required">自分のID：</span><br/>
+			<span class="required"><a href="javascript:void(0)" class="myID_add">　＋もっと入力</a></span>
+			</dt>
+			<dd class="myID_var">			 
+				<input name="myID_0" style="width:100%;max-width: 100px" type="text" />
+			<button class="myID_del">×</button>
+			</dd>
+		</dl>
+		<dl class="list">
+			<dt><span class="required">エピローグキャスト一覧(鳩)：</span>
+			</dt>
+			<dd>
+			<textarea id="epiCast" cols="30" name="epiCast" rows="15" style="width:100%;max-width: 600px"></textarea></dd>
+		</dl>
+		<input name="searchdata" type="submit" value="同村チェック" /><br />
+</form>
+<hr />
+<p>エピローグ検索(β版)です。<br />
+エピローグ中に再戦チェックをする際の手間省略のために作りました。β版です。<br />
+動作の保障はあんまりしません。<br />
+<br />
+自分のIDにはそのまま自分のIDを入力してください。一応複数入力に対応しています。<br />
+エピローグキャスト一覧には、まず、その村の鳩(携帯)モード(※)を開いていただき、キャスト表をコピーして貼り付けてください。<br />
+以下は一例です。</p>
+<p class="auto-style1">
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+お散歩隊長 アシモフ (master)、参加、2d襲撃死。村人だった(村人を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+新製品 モナリザ (id1)、参加、7d処刑死。首無騎士だった(首無騎士を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+双子 朝顔 (id2)、参加、4d襲撃死。共鳴者だった(共鳴者を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+営利政府 トレイル (id3)、参加、6d処刑死。村人だった(村人を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+FSM団 ミナカタ (id4)、参加、5d処刑死。村人だった(村人を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+奇跡の子 カリュクス (id5)、参加、生存者。共鳴者だった(共鳴者を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+双子 夕顔 (id6)、参加、生存者。共鳴者だった(共鳴者を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+覆面嫉妬団 ミルフィ (id7)、参加、5d襲撃死。村人だった(村人を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+服飾商 ＰＪ (id8)、参加、4d処刑死。村人だった(村人を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+消防隊長 トルドヴィン (id8)、参加、生存者。共鳴者だった(共鳴者を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+粉ひき ケヴィン (id9)、参加、生存者。共鳴者だった(共鳴者を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+こひつじ アリス (id10)、参加、生存者。共鳴者だった(共鳴者を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+魚屋 ワンダ (id11)、参加、3d処刑死。村人だった(村人を希望)。<span class="Apple-converted-space">&nbsp;</span></font><br style="color: rgb(0, 0, 0); font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;" />
+<font color="maroon" style="font-family: 'MS PGothic'; font-size: medium; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: auto; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px;">
+教え子 シメオン (id12)、参加、生存者。共鳴者だった(共鳴者を希望)。</font></p>
+<p>masterや自分のID行など「これはチェックしないでいいや」って行は削除してから貼っていただけると処理が若干早くなります。(コンマ数秒くらい)<br />
+また、余計な空行等があると解析に失敗することがあります。失敗した時はやり直してください。<br />
+一度に検索できる件数は20件に制限してあります。</p>
+<p>貼り付け後、同村チェックボタンを押していただくと、その人と同村したことがあるかどうかが○×で簡易表示されます。<br />
+○の人は、クリックすると詳細が見られます。</p>
+<p>β版なので、なんかおかしい挙動をしたらご連絡ください。よろしくおねがいします。</p>
+<p>(※)議事国の携帯モードの開き方：補足ページを作ったのでわからない人は<a href="dousonchecker_howtoepi.htm">こちら</a>を参照</p>
+<hr />
+<p><a href="dousonchecker_search.html">戻る</a><br />
+</p>
+
+</body>
+
+</html>
