@@ -14,7 +14,8 @@ function insert_vil_data($vil_url,$form_server){
 	$edit_i = 0;
 
 	// 村情報
-	// どうやらtitleからぶん取ってくるしかない様子。えー。
+	// どうやらtitleからぶん取ってくるしかない様子。
+	// 陰謀(新版)もこの部分は共通
 	$title = trim_convert($html->find('title',0)->plaintext);
 	$vil_no = preg_replace("/(エピローグ|終了) \/ ([0-9]*) (.*)/s","\\2",$title,-1);
 	$vil_name = preg_replace("/(エピローグ|終了) \/ [0-9]* (.+) \- 人狼議事.*/s","\\2",$title,-1);
@@ -34,20 +35,25 @@ function insert_vil_data($vil_url,$form_server){
 	// 2013/04/17 標準・RPなど現行で動いてない鯖の記述を削除
 	if(strcmp($form_server,"Cafe") == 0){
 		echo "Cafe<br>";
-		// 陰謀(鳩モード)
-		foreach($html->find('font[color="maroon"]') as $element){
+		// 陰謀(新版)
+		// 処理の流れ：「gon.potofs」を区切りとして文字列を配列に分割
+		// その配列の各要素に対してpreg_replace
+		// $data[]にぶちこむ　ね、簡単でしょ☆
+		$script = trim_convert($html->find('script',-1)->innertext);
+		$script_pl = explode("gon.potofs",$script);
+		// 前後要素の削除
+		array_shift($script_pl);
+		array_pop($script_pl);
+		foreach($script_pl as $element){
 			// 加工(edit_hoge)--------------------------------------
-			$edit_temp = preg_replace("/(.*) \((.*)\)、.*/","\\1,\\2",trim_convert($element->innertext),-1);
-			if(strcmp($edit_temp,trim_convert($element->innertext)) !== 0){
-				$edit_temp =  explode(",",$edit_temp,2);
-				$edit_character = $edit_temp[0];
-				$edit_id = $edit_temp[1];
-				$data[] = array(
-				'number' => $edit_i,
-				'character' => $edit_character,
-				'id' => $edit_id);
-				$edit_i++;
-			}
+			$edit_character = preg_replace("/.*\"longname\": \"(.*?)\".*/","\\1",$element,-1);
+			$edit_id = preg_replace("/.*pl\.sow\_auth\_id \= \"(.*?)\".*/","\\1",$element,-1);
+			
+			$data[] = array(
+			'number' => $edit_i,
+			'character' => $edit_character,
+			'id' => $edit_id);
+			$edit_i++;
 		}
 	}else{
 		echo "その他<br>";
@@ -63,13 +69,13 @@ function insert_vil_data($vil_url,$form_server){
 			$edit_i++;
 		}
 	}
-	/*	
+	
 	echo "配列を出力する<br>";
 	foreach($data as $column){
 		var_dump($column);
 		echo "<br>";
 	}
-	*/
+	
 	
 	// SQLの挿入
 	$db_conn = db_conn();
