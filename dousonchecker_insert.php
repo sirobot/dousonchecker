@@ -216,31 +216,20 @@ function get_server_name($form_server){
 // 既存URLに対しても実行できるように別関数化
 // 返り値：日付(YYYY/MM/DD)
 function get_vil_create_time($vil_url,$form_server){
-	//エピローグURLからプロローグURLを生成する
 	if(strcmp($form_server,"Cafe") == 0 ){
-		/* 頑張ったところアレだが、恐らく取得できない。
-		手動挿入の形になるかも */
-//		// 陰謀州(鳩モード)
-//		//./sow.cgi?ua=mb&t=5&v=212&r=50&o=a&move=first
-//		//t=hogeをt=0に置換
-//		$vil_prg_url = preg_replace("/t=[0-9]+/","t=0",$vil_url,-1);
-//		echo "debug:vil_prg_url:" . $vil_prg_url . "<br>";
-//		$html = file_get_html($vil_prg_url);		
-//		$SS00000 = $html->find('a[name="SS00000"]',0)->innertext;
-//		echo "debug:SS00000:" . $SS00000 . "<br>";
-//		$SS00000_time = preg_replace("/.*(\d{2}\/\d{2}).*/","\\1",$SS00000,-1);
-//		// 鳩モードだと年が反映されないので、年を取ってくる
-//		// ただし、取ってきた日付が未来の日付の場合、１年前に変更。
-//		$temp_SS00000_time = date("Y") . '/' . $SS00000_time;
-//		if(time() < strtotime($temp_SS00000_time)){
-//			$temp_SS00000_time = date("Y") - 1;
-//			$SS00000_time = $temp_SS00000_time . '/' . $SS00000_time;
-//		}else{
-//			$SS00000_time = $temp_SS00000_time;
-//		}
-//		echo "debug:SS00000_time:" . $SS00000_time. "<br>";
-		return "2030/06/01";	// 日本国内で観測可能な金環日食
+		// 陰謀州(新版)
+		// 陰謀州は情報ページにアクセスできれば全ての情報が取得可能なため、プロローグURLの生成は行わない
+		// <script>タグ内部を取得
+		// "updateddt":    Date.create(1000 * 1365769542),
+		$html = file_get_html($vil_url);
+		$SS00000 = trim_convert($html->find('script',-1)->innertext);
+		$SS00000_time = preg_replace("/.*\"updateddt\":    Date\.create\(1000 \* ([0-9]*)\)\,.*/","\\1",$SS00000,-1);
+		// エポック秒変換
+		$SS00000_time = date("Y/m/d",$SS00000_time);
+		echo "debug:SS00000_time:" . $SS00000_time. "<br>";
+		return $SS00000_time;
 	}else{
+		//エピローグURLからプロローグURLを生成する
 		//↓エピローグURL例
 		//./sow.cgi?css=cinema800&vid=133&turn=6&mode=all&move=page&pageno=1
 		//turn=hogeをturn=0に置換
