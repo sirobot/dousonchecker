@@ -14,7 +14,8 @@ function insert_vil_data($vil_url,$form_server){
 	$edit_i = 0;
 
 	// 村情報
-	// どうやらtitleからぶん取ってくるしかない様子。えー。
+	// どうやらtitleからぶん取ってくるしかない様子。
+	// 陰謀(新版)もこの部分は共通
 	$title = trim_convert($html->find('title',0)->plaintext);
 	$vil_no = preg_replace("/(エピローグ|終了) \/ ([0-9]*) (.*)/s","\\2",$title,-1);
 	$vil_name = preg_replace("/(エピローグ|終了) \/ [0-9]* (.+) \- 人狼議事.*/s","\\2",$title,-1);
@@ -34,20 +35,25 @@ function insert_vil_data($vil_url,$form_server){
 	// 2013/04/17 標準・RPなど現行で動いてない鯖の記述を削除
 	if(strcmp($form_server,"Cafe") == 0){
 		echo "Cafe<br>";
-		// 陰謀(鳩モード)
-		foreach($html->find('font[color="maroon"]') as $element){
+		// 陰謀(新版)
+		// 処理の流れ：「gon.potofs」を区切りとして文字列を配列に分割
+		// その配列の各要素に対してpreg_replace
+		// $data[]にぶちこむ　ね、簡単でしょ☆
+		$script = trim_convert($html->find('script',-1)->innertext);
+		$script_pl = explode("gon.potofs",$script);
+		// 前後要素の削除
+		array_shift($script_pl);
+		array_pop($script_pl);
+		foreach($script_pl as $element){
 			// 加工(edit_hoge)--------------------------------------
-			$edit_temp = preg_replace("/(.*) \((.*)\)、.*/","\\1,\\2",trim_convert($element->innertext),-1);
-			if(strcmp($edit_temp,trim_convert($element->innertext)) !== 0){
-				$edit_temp =  explode(",",$edit_temp,2);
-				$edit_character = $edit_temp[0];
-				$edit_id = $edit_temp[1];
-				$data[] = array(
-				'number' => $edit_i,
-				'character' => $edit_character,
-				'id' => $edit_id);
-				$edit_i++;
-			}
+			$edit_character = preg_replace("/.*\"longname\": \"(.*?)\".*/","\\1",$element,-1);
+			$edit_id = preg_replace("/.*pl\.sow\_auth\_id \= \"(.*?)\".*/","\\1",$element,-1);
+			
+			$data[] = array(
+			'number' => $edit_i,
+			'character' => $edit_character,
+			'id' => $edit_id);
+			$edit_i++;
 		}
 	}else{
 		echo "その他<br>";
@@ -63,13 +69,13 @@ function insert_vil_data($vil_url,$form_server){
 			$edit_i++;
 		}
 	}
-	/*	
+	
 	echo "配列を出力する<br>";
 	foreach($data as $column){
 		var_dump($column);
 		echo "<br>";
 	}
-	*/
+	
 	
 	// SQLの挿入
 	$db_conn = db_conn();
@@ -216,31 +222,20 @@ function get_server_name($form_server){
 // 既存URLに対しても実行できるように別関数化
 // 返り値：日付(YYYY/MM/DD)
 function get_vil_create_time($vil_url,$form_server){
-	//エピローグURLからプロローグURLを生成する
 	if(strcmp($form_server,"Cafe") == 0 ){
-		/* 頑張ったところアレだが、恐らく取得できない。
-		手動挿入の形になるかも */
-//		// 陰謀州(鳩モード)
-//		//./sow.cgi?ua=mb&t=5&v=212&r=50&o=a&move=first
-//		//t=hogeをt=0に置換
-//		$vil_prg_url = preg_replace("/t=[0-9]+/","t=0",$vil_url,-1);
-//		echo "debug:vil_prg_url:" . $vil_prg_url . "<br>";
-//		$html = file_get_html($vil_prg_url);		
-//		$SS00000 = $html->find('a[name="SS00000"]',0)->innertext;
-//		echo "debug:SS00000:" . $SS00000 . "<br>";
-//		$SS00000_time = preg_replace("/.*(\d{2}\/\d{2}).*/","\\1",$SS00000,-1);
-//		// 鳩モードだと年が反映されないので、年を取ってくる
-//		// ただし、取ってきた日付が未来の日付の場合、１年前に変更。
-//		$temp_SS00000_time = date("Y") . '/' . $SS00000_time;
-//		if(time() < strtotime($temp_SS00000_time)){
-//			$temp_SS00000_time = date("Y") - 1;
-//			$SS00000_time = $temp_SS00000_time . '/' . $SS00000_time;
-//		}else{
-//			$SS00000_time = $temp_SS00000_time;
-//		}
-//		echo "debug:SS00000_time:" . $SS00000_time. "<br>";
-		return "2030/06/01";	// 日本国内で観測可能な金環日食
+		// 陰謀州(新版)
+		// 陰謀州は情報ページにアクセスできれば全ての情報が取得可能なため、プロローグURLの生成は行わない
+		// <script>タグ内部を取得
+		// "updateddt":    Date.create(1000 * 1365769542),
+		$html = file_get_html($vil_url);
+		$SS00000 = trim_convert($html->find('script',-1)->innertext);
+		$SS00000_time = preg_replace("/.*\"updateddt\":    Date\.create\(1000 \* ([0-9]*)\)\,.*/","\\1",$SS00000,-1);
+		// エポック秒変換
+		$SS00000_time = date("Y/m/d",$SS00000_time);
+		echo "debug:SS00000_time:" . $SS00000_time. "<br>";
+		return $SS00000_time;
 	}else{
+		//エピローグURLからプロローグURLを生成する
 		//↓エピローグURL例
 		//./sow.cgi?css=cinema800&vid=133&turn=6&mode=all&move=page&pageno=1
 		//turn=hogeをturn=0に置換
