@@ -110,37 +110,25 @@ function insert_vil_all($form_url,$form_server,$form_first_vil,$form_last_vil){
 	
 	$oldlog_html = file_get_html($form_url);
 	
-	// 2013/04/17	RPAd及びultimateに関する記述を削除
-	//				陰謀州仕様変更に伴い、鳩モードからの解析に修正
+	// 2013/05/01　陰謀新版正式対応
 	if(strcmp($form_server,"Cafe") == 0 ){
-		// 終了村一覧も鳩モードより取得
-		// 鳩モードは「廃村」とそれ以外の区別がなく、&t=99で強制的にエピローグURLに飛ぶことが可能
-		// ていうか&turn=99でエピに行けるのは他の鯖もだぞ！気付くのおせえ！
-		// http://cabala.halfmoon.jp/cafe/sow.cgi?ua=mb&c=oldlog&r=50&o=a
-		
-		foreach($oldlog_html->find('a') as $oldlog_vildata){
-			echo "sore";
+		foreach($oldlog_html->find('table.vindex tbody tr') as $oldlog_vildata){
+			echo "dore";
 			// 村のURLを特定する
 			// 村ID
-			$vil_link_title = trim_convert($oldlog_vildata->innertext);
-			$vil_no = preg_replace("/([0-9]+) .*/","\\1",$vil_link_title,-1);
-			// 「次」が来た場合終了
-			if(strcmp($vil_no,$vil_link_title) == 0){
-				// 処理終了
-				return;
-			}
+			$vil_no = trim_convert($oldlog_vildata->children(0)->plaintext);
+			$vil_no = preg_replace("/^([0-9]+).*/","\\1",$vil_no,-1);
 			if($vil_no < $form_first_vil || $vil_no > $form_last_vil){
 				echo "skip" . $vil_no . "<br>";
 				continue;
 			}
-			// エピローグURLを99で決め打ち
-			$vil_last_day = 99;
-			// 最終日から村URLを生成
-			// 村URL
-			// http://cabala.halfmoon.jp/cafe/sow.cgi?ua=mb&c=oldlog&r=50&o=a
-			// http://cabala.halfmoon.jp/cafe/sow.cgi?ua=mb&t=99&v=212&r=50&o=a&move=first
-			$vil_url = preg_replace("/(.*cgi\?)(.*)/","\\1",$form_url,-1);
-			$vil_url = $vil_url . "ua=mb" . "&t=" . trim_convert($vil_last_day) . "&v=" . trim_convert($vil_no) . "&r=50&o=a&move=first";
+			// 陰謀新版の場合エピローグの取得は不要
+			// 村URLを取得
+			// http://cabala.halfmoon.jp/cafe/sow.cgi?cmd=oldlog
+			$vil_url_host = preg_replace("/(.*)sow.cgi(.*)/","\\1",$form_url,-1);
+			$vil_url_path = trim_convert($oldlog_vildata->children(0)->children(0)->href);
+			$vil_url_path = preg_replace("/\.\/(.*)/","\\1",$vil_url_path,-1);
+			$vil_url = $vil_url_host . $vil_url_path;
 
 			echo $vil_url . "<br>";
 			insert_vil_data($vil_url,$form_server);
@@ -156,8 +144,6 @@ function insert_vil_all($form_url,$form_server,$form_first_vil,$form_last_vil){
 				echo "skip" . $vil_no . "<br>";
 				continue;
 			}
-			// 村名
-			// $vil_name = $oldlog_vildata->children(1)->children(0)->plaintext;
 			// 最終日＆エピローグ
 			$vil_last_day = trim_convert($oldlog_vildata->children(3)->plaintext);
 			// 廃村対策
