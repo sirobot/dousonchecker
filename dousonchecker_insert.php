@@ -114,10 +114,15 @@ function insert_vil_all($form_url,$form_server,$form_first_vil,$form_last_vil){
 	if(strcmp($form_server,"Cafe") == 0 ){
 		foreach($oldlog_html->find('table.vindex tbody tr') as $oldlog_vildata){
 			echo "dore";
+			$form_first_vil = 210;
 			// 村のURLを特定する
 			// 村ID
-			$vil_no = trim_convert($oldlog_vildata->children(0)->plaintext);
-			$vil_no = preg_replace("/^([0-9]+).*/","\\1",$vil_no,-1);
+			$vil_no_temp = trim_convert($oldlog_vildata->children(0)->innertext);
+			$vil_no = preg_replace("/^([0-9]+).*/","\\1",$vil_no_temp,-1);
+			if(strcmp($vil_no,$vil_no_temp) == 0){
+				echo "skip thead<br>";
+				continue;
+			}
 			if($vil_no < $form_first_vil || $vil_no > $form_last_vil){
 				echo "skip" . $vil_no . "<br>";
 				continue;
@@ -125,10 +130,7 @@ function insert_vil_all($form_url,$form_server,$form_first_vil,$form_last_vil){
 			// 陰謀新版の場合エピローグの取得は不要
 			// 村URLを取得
 			// http://cabala.halfmoon.jp/cafe/sow.cgi?cmd=oldlog
-			$vil_url_host = preg_replace("/(.*)sow.cgi(.*)/","\\1",$form_url,-1);
-			$vil_url_path = trim_convert($oldlog_vildata->children(0)->children(0)->href);
-			$vil_url_path = preg_replace("/\.\/(.*)/","\\1",$vil_url_path,-1);
-			$vil_url = $vil_url_host . $vil_url_path;
+			$vil_url = "http://cabala.halfmoon.jp/cafe/sow.cgi?css=ririnra&vid=" . $vil_no . "#mode=info_open_player";
 
 			echo $vil_url . "<br>";
 			insert_vil_data($vil_url,$form_server);
