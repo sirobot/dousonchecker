@@ -28,9 +28,9 @@ if($db_conn !== false){
 		'first_vil' => $first_vil['標準']);
 	*/
 	// 陰謀
-	// 2013/04/17 陰謀鯖仕様変更暫定対応
+	// 2013/05/01 陰謀新版正式対応
 	$array_giji[] = array(
-		'url' => "http://cabala.halfmoon.jp/cafe/sow.cgi?ua=mb&c=oldlog&r=50&o=a",
+		'url' => "http://cabala.halfmoon.jp/cafe/sow.cgi?cmd=oldlog",
 		'server' => "Cafe",
 		'first_vil' => $first_vil['陰謀(陰謀の苑・Cabala Cafe)']);
 	// 大乱闘AS
