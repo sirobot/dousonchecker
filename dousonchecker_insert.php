@@ -70,12 +70,13 @@ function insert_vil_data($vil_url,$form_server){
 		}
 	}
 	
+	/*
 	echo "配列を出力する<br>";
 	foreach($data as $column){
 		var_dump($column);
 		echo "<br>";
 	}
-	
+	*/
 	
 	// SQLの挿入
 	$db_conn = db_conn();
