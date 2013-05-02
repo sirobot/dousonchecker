@@ -420,6 +420,9 @@ function get_server_name($form_server){
 	}else if(strcmp($form_server,"Pan") == 0){
 		// 似顔絵人狼
 		$server_name = "似顔絵人狼";
+	}else if(strcmp($form_server,"morphe") == 0){
+		// 似顔絵人狼
+		$server_name = "夢の形";
 	}else{
 		$server_name = $form_server;
 	}
