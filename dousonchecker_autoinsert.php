@@ -64,6 +64,12 @@ if($db_conn !== false){
 		'server' => "Pan",
 		'first_vil' => $first_vil['似顔絵人狼']);
 	*/
+	// 夢の形
+	// 2013/05/02 追加
+	$array_giji[] = array(
+		'url' => "http://morphe.sakura.ne.jp/morphe/sow.cgi?cmd=oldlog",
+		'server' => "morphe",
+		'first_vil' => $first_vil['夢の形']);
 
 	foreach($array_giji as $giji){
 		insert_vil_all($giji['url'],$giji['server'],$giji['first_vil'],999);
