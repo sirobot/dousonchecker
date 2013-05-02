@@ -115,7 +115,6 @@ function insert_vil_all($form_url,$form_server,$form_first_vil,$form_last_vil){
 	if(strcmp($form_server,"Cafe") == 0 ){
 		foreach($oldlog_html->find('table.vindex tbody tr') as $oldlog_vildata){
 			echo "dore";
-			$form_first_vil = 210;
 			// 村のURLを特定する
 			// 村ID
 			$vil_no_temp = trim_convert($oldlog_vildata->children(0)->innertext);
