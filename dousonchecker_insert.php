@@ -115,7 +115,6 @@ function insert_vil_all($form_url,$form_server,$form_first_vil,$form_last_vil){
 	if(strcmp($form_server,"Cafe") == 0 ){
 		foreach($oldlog_html->find('table.vindex tbody tr') as $oldlog_vildata){
 			echo "dore";
-			$form_first_vil = 210;
 			// 村のURLを特定する
 			// 村ID
 			$vil_no_temp = trim_convert($oldlog_vildata->children(0)->innertext);
@@ -137,7 +136,8 @@ function insert_vil_all($form_url,$form_server,$form_first_vil,$form_last_vil){
 			insert_vil_data($vil_url,$form_server);
 		}
 	}else{
-		// RPAd以外？(標準、陰謀系はこれで取得できるのを確認済)
+		// 陰謀系
+		// 2013/05/02 morphe対応
 		foreach($oldlog_html->find('table.vindex tr.i_hover') as $oldlog_vildata){
 			echo "are";
 			// 村のURLを特定する
@@ -200,6 +200,9 @@ function get_server_name($form_server){
 	}else if(strcmp($form_server,"Pan") == 0){
 		// 似顔絵人狼
 		$server_name = "似顔絵人狼";
+	}else if(strcmp($form_server,"morphe") == 0){
+		// 似顔絵人狼
+		$server_name = "夢の形";
 	}else{
 		$server_name = $form_server;
 	}
