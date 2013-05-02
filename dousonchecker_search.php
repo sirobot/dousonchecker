@@ -221,7 +221,7 @@ if($db_conn !== false){
 		$sql_where_table1 = $sql_where_table1 . $sql_neighborID . ")";
 	}
 	// サーバー指定
-	if(count($form_server) == 10){
+	if(count($form_server) == 11){
 		// 全部チェックが入っている場合は条件は付けない
 	}else{
 		// サーバ指定をOR条件で付与
