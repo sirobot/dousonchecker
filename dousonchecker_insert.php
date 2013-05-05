@@ -39,7 +39,7 @@ function insert_vil_data($vil_url,$form_server){
 		// 処理の流れ：「gon.potofs」を区切りとして文字列を配列に分割
 		// その配列の各要素に対してpreg_replace
 		// $data[]にぶちこむ　ね、簡単でしょ☆
-		$script = trim_convert($html->find('script',-1)->innertext);
+		$script = trim_convert($html->find('script',-2)->innertext);
 		$script_pl = explode("gon.potofs",$script);
 		// 前後要素の削除
 		array_shift($script_pl);
@@ -220,11 +220,12 @@ function get_vil_create_time($vil_url,$form_server){
 		// <script>タグ内部を取得
 		// "updateddt":    Date.create(1000 * 1365769542),
 		$html = file_get_html($vil_url);
-		$SS00000 = trim_convert($html->find('script',-1)->innertext);
+		$SS00000 = trim_convert($html->find('script',-2)->innertext);
 		$SS00000_time = preg_replace("/.*\"updateddt\":    Date\.create\(1000 \* ([0-9]*)\)\,.*/","\\1",$SS00000,-1);
 		// エポック秒変換
+		echo "debug:SS00000_time(before):" . $SS00000_time. "<br>";
 		$SS00000_time = date("Y/m/d",$SS00000_time);
-		echo "debug:SS00000_time:" . $SS00000_time. "<br>";
+		echo "debug:SS00000_time(after):" . $SS00000_time. "<br>";
 		return $SS00000_time;
 	}else{
 		//エピローグURLからプロローグURLを生成する
