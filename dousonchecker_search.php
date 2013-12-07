@@ -221,7 +221,7 @@ if($db_conn !== false){
 		$sql_where_table1 = $sql_where_table1 . $sql_neighborID . ")";
 	}
 	// サーバー指定
-	if(count($form_server) == 11){
+	if(count($form_server) == 12){
 		// 全部チェックが入っている場合は条件は付けない
 	}else{
 		// サーバ指定をOR条件で付与
@@ -421,8 +421,11 @@ function get_server_name($form_server){
 		// 似顔絵人狼
 		$server_name = "似顔絵人狼";
 	}else if(strcmp($form_server,"morphe") == 0){
-		// 似顔絵人狼
+		// 夢の形
 		$server_name = "夢の形";
+	}else if(strcmp($form_server,"Ciel") == 0){
+		// Ciel
+		$server_name = "Ciel(RPCh)";
 	}else{
 		$server_name = $form_server;
 	}

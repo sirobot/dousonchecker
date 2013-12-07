@@ -32,9 +32,9 @@ function insert_vil_data($vil_url,$form_server){
 
 	// キャラ情報
 	// 鯖によって若干処理が異なるので分岐
-	// 2013/04/17 標準・RPなど現行で動いてない鯖の記述を削除
-	if(strcmp($form_server,"Cafe") == 0){
-		echo "Cafe<br>";
+	// 2013/12/07 Ciel対応
+	if(strcmp($form_server,"Cafe") == 0 || strcmp($form_server,"Ciel") == 0){
+		echo "new script<br>";
 		// 陰謀(新版)
 		// 処理の流れ：「gon.potofs」を区切りとして文字列を配列に分割
 		// その配列の各要素に対してpreg_replace
@@ -56,7 +56,7 @@ function insert_vil_data($vil_url,$form_server){
 			$edit_i++;
 		}
 	}else{
-		echo "その他<br>";
+		echo "その他(旧スクリプト)<br>";
 		foreach($html->find('table.vindex tr.i_active') as $element){
 			// 加工(edit_hoge)--------------------------------------
 			$edit_character =  trim_convert($element->children(0)->plaintext);
@@ -111,8 +111,8 @@ function insert_vil_all($form_url,$form_server,$form_first_vil,$form_last_vil){
 	
 	$oldlog_html = file_get_html($form_url);
 	
-	// 2013/05/01　陰謀新版正式対応
-	if(strcmp($form_server,"Cafe") == 0 ){
+	// 2013/12/07 Ciel対応
+	if(strcmp($form_server,"Cafe") == 0 || strcmp($form_server,"Ciel") == 0){
 		foreach($oldlog_html->find('table.vindex tbody tr') as $oldlog_vildata){
 			echo "dore";
 			// 村のURLを特定する
@@ -127,10 +127,9 @@ function insert_vil_all($form_url,$form_server,$form_first_vil,$form_last_vil){
 				echo "skip" . $vil_no . "<br>";
 				continue;
 			}
-			// 陰謀新版の場合エピローグの取得は不要
 			// 村URLを取得
-			// http://cabala.halfmoon.jp/cafe/sow.cgi?cmd=oldlog
-			$vil_url = "http://cabala.halfmoon.jp/cafe/sow.cgi?css=ririnra&vid=" . $vil_no . "#mode=info_open_player";
+			$vil_url = preg_replace("/(.*cgi\?)(.*)/","\\1",$form_url,-1);
+			$vil_url = $vil_url . "vid=" . $vil_no . "#mode=info_open_player";
 
 			echo $vil_url . "<br>";
 			insert_vil_data($vil_url,$form_server);
@@ -203,6 +202,9 @@ function get_server_name($form_server){
 	}else if(strcmp($form_server,"morphe") == 0){
 		// 似顔絵人狼
 		$server_name = "夢の形";
+	}else if(strcmp($form_server,"Ciel") == 0){
+		// Ciel
+		$server_name = "Ciel(RPCh)";
 	}else{
 		$server_name = $form_server;
 	}
@@ -214,7 +216,7 @@ function get_server_name($form_server){
 // 既存URLに対しても実行できるように別関数化
 // 返り値：日付(YYYY/MM/DD)
 function get_vil_create_time($vil_url,$form_server){
-	if(strcmp($form_server,"Cafe") == 0 ){
+	if(strcmp($form_server,"Cafe") == 0 || strcmp($form_server,"Ciel") == 0){
 		// 陰謀州(新版)
 		// 陰謀州は情報ページにアクセスできれば全ての情報が取得可能なため、プロローグURLの生成は行わない
 		// <script>タグ内部を取得

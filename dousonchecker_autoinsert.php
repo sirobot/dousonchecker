@@ -71,6 +71,13 @@ if($db_conn !== false){
 		'server' => "morphe",
 		'first_vil' => $first_vil['夢の形']);
 
+	// Ciel
+	// 2013/12/07 追加(新スクリプト州)
+	$array_giji[] = array(
+		'url' => "http://ciel.moo.jp/cheat/sow.cgi?css=ririnra&cmd=oldlog",
+		'server' => "Ciel",
+		'first_vil' => $first_vil['Ciel(RPCh)']);
+	
 	foreach($array_giji as $giji){
 		insert_vil_all($giji['url'],$giji['server'],$giji['first_vil'],999);
 	}
